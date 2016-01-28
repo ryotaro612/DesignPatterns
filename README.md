@@ -31,6 +31,7 @@ the intent of the Bridge pattern is to
 
 the intent of the Abstract factory pattern is to 
 > Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+> Abstract Factory can be implemented as a family of Factory Methods.
 
 ## The Decorator Pattern
 
