@@ -9,33 +9,6 @@ trait Command {
 
 }
 
-/**
-  * role: ConcreteCommand
-  */
-class OpenCommand(private val app: Application) extends Command {
-
-  override def execute(): Unit = {
-    askUser() match {
-      case Some(str) => {
-        val doc = new Document(str)
-        app.add(doc)
-        doc.open()
-      }
-      case None =>
-    }
-  }
-
-  def askUser(): Option[String] = Some("foo")
-}
-
-class Application {
-     def add(doc: Document) {}
-}
-
-class Document(name: String) {
-  def open() {}
-  def paste() {}
-}
 
 /**
   * role: ConcreteCommand
@@ -45,11 +18,17 @@ class PasteCommand(private val doc: Document) extends Command {
     doc.paste()
   }
 }
-
+/**
+  * role: ConcreteCommand
+  */
 class SimpleCommand(private val receiver: Receiver) extends Command {
   override def execute(): Unit = {
     receiver.action()
   }
+}
+
+class Document() {
+  def paste() {}
 }
 
 class Invoker {
@@ -59,7 +38,7 @@ class Invoker {
 }
 
 class Client {
-   new Invoker().storeCommand(new OpenCommand(new Application()) :: new SimpleCommand(new Receiver) :: Nil)
+   new Invoker().storeCommand(new PasteCommand(new Document) :: new SimpleCommand(new Receiver) :: Nil)
 }
 
 class Receiver {
